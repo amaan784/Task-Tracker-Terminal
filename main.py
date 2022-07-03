@@ -29,31 +29,39 @@ app = typer.Typer()
 def add(task: str, category: str):
     # prints in the command line
     typer.echo(f"adding the {task} task in the {category} category")
-
+    # calls the display function to print the table
+    display()
+    
 # function for deleting a task
 @app.command(short_help='deletes a task')
 def delete(position: int):
     # prints in the command line
     typer.echo(f"deleting {position}")
+    # calls the display function to print the table
+    display()
     
 # function for updating a task
 @app.command(short_help='updates a task')
 def update(position: int, task: str=None, category: str=None):
     # prints in the command line
     typer.echo(f"updating {position}")
+    # calls the display function to print the table
+    display()
     
 # function for completing a task
 @app.command(short_help='marks a task as complete')
 def complete(position: int):
     # prints in the command line
     typer.echo(f"complete {position}")
+    # calls the display function to print the table
+    display()
     
 # function for showing the tasks
 @app.command(short_help='displays the tasks')
 def display():
     tasks = [("Taks1", "category1"), ("task2", "categrory2")]
     
-    # printing a name for the app with the color magenta and making the text bold
+    # printing a name for the table with the color magenta and making the text bold
     # an opening and closing tag [] [/] is needed for the fonts etc
     console.print("[bold magenta]TODO LIST[/bold magenta]!", "💻")
     
