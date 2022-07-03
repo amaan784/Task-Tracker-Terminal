@@ -1,3 +1,6 @@
+# the purpose of this file is to define our database, define tables, fields
+
+# datetime module 
 import datetime
 
 class TODO:
@@ -9,9 +12,9 @@ class TODO:
             task (str): name of the task
             category (str): category of the task
             date_added (str, optional): the date the task was added to the table. Defaults to None.
-            date_completed (_type_, optional): _description_. Defaults to None.
-            status (_type_, optional): _description_. Defaults to None.
-            position (_type_, optional): _description_. Defaults to None.
+            date_completed (str, optional): the date that task was completed. Defaults to None.
+            status (int, optional): flag for checking whether a task was completed . Defaults to None.
+            position (int, optional): the position / index at which the task will be stored. Defaults to None.
         """
         self.task = task
         self.category = category
