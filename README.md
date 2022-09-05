@@ -5,7 +5,7 @@
  > 1) main.py = main program (contains cmd arguments handling, output etc)
  > 2) model.py = class containing the tasks definition
  > 3) database.py = contains all database functions
- 
+
 # Libraries used-
 sqlite3 
 typer
@@ -54,3 +54,5 @@ The table will get displayed after each command
 
 - https://www.youtube.com/watch?v=ynd67UwG_cI
 - https://rich.readthedocs.io/en/stable/appendix/colors.html
+- https://typer.tiangolo.com/
+- https://docs.python.org/3/library/sqlite3.html
