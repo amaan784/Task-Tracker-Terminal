@@ -1,4 +1,4 @@
-# sqlite3 pachage for the database
+# sqlite3 package for the database
 import sqlite3
 
 from typing import List
@@ -14,28 +14,34 @@ connection = sqlite3.connect('task_tracker.db')
 # creating a cursor
 cursor = connection.cursor()
 
-# defining the table and the same attributes as the ones in model.py
-# we also define the datatypes of the attributes related to sqlite like string datatype is text here
+# for creating a table
 def create_table():
+    # defining the table if it does not exist and placing the same attributes as the ones in model.py
+    # we also define the datatypes of the attributes related to sqlite like string datatype is text here
     cursor.execute("""CREATE TABLE IF NOT EXISTS task_tracker ()
         task text,
-        category text.
-        data_added text
-        status integer
-        position integer
+        category text,
+        status integer,
+        position integer,
+        data_added text,
+        date_completed text
         )
         """)
 
-# for insterting tasks
+# for inserting tasks
 def insert_task(task: task_tracker):
-    cursor.execute('select count(*) FROM todos')
+    # executing sqlite script to count the number of records in the table
+    cursor.execute('select count(*) FROM task_tracker')
+    # gives the number of items in the table
     count = cursor.fetchone()[0]
+    # the position of the task to be inserted is the count of the elements in the table or 0
     task.position = count if count else 0
+    # insert the task in the appropriate position
     with connection:
-        cursor.execute('INSERT INTO task_tracker VALUES (:task, :category, :data_added, :data_completed, :status, :position)',
-                       {'task':task.task, 'category':task.category, 
-                        'data_added':task.date_added, 'date_ccompleted':task.date_completed,
-                        'status':task.status, 'position':task.position})
+        cursor.execute('INSERT INTO task_tracker VALUES (:task, :category, :status, :position, :data_added, :data_completed)',
+                       {'task':task.task, 'category':task.category,
+                        'status':task.status, 'position':task.position , 
+                        'data_added':task.date_added, 'date_ccompleted':task.date_completed})
     
 
 # calling the create table function

@@ -17,8 +17,8 @@ app = typer.Typer()
 
 # the app.commands() and the corresponding functions help us deal with the CLI (command line interface) 
 # we basically create our command
-# with the ability to displa the appropriate success and error messages for the commands
-# the short_help helps us to add a description for the tasks
+# with the ability to display the appropriate success and error messages for the commands
+# the short_help parameter helps us to add a description for the tasks
 # the function name is the command name in the cmd and it has its arguments
 # if the appropriate arguments are not passed then an error or helper message is displayed
 # if the the approproate arguments are passed then whatever is inside the function will be executed
@@ -59,7 +59,7 @@ def complete(position: int):
 # function for showing the tasks
 @app.command(short_help='displays the tasks')
 def display():
-    tasks = [("Taks1", "category1"), ("task2", "categrory2")]
+    tasks = [("Task1", "category1"), ("Task2", "category2")]
     
     # printing a name for the table with the color magenta and making the text bold
     # an opening and closing tag [] [/] is needed for the fonts etc
