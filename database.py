@@ -37,7 +37,7 @@ def insert_task(task: task_tracker):
     # the position of the task to be inserted is the count of the elements in the table or 0
     task.position = count if count else 0
     # insert the task in the appropriate position
-    # defining the parameter from befor can prevent SQL Injection attacks
+    # defining the parameter from before can prevent SQL Injection attacks
     with connection:
         cursor.execute('INSERT INTO task_tracker VALUES (:task, :category, :status, :position, :data_added, :data_completed)',
                        {'task':task.task, 'category':task.category,
@@ -55,6 +55,31 @@ def get_all_tasks() -> List[task_tracker]:
         tasks.append(task_tracker(*result))
     # return the records
     return tasks
+
+# for deleting a task
+def delete_task(position):
+    # executing sqlite script to count the number of records in the table
+    cursor.execute('select count(*) FROM task_tracker')
+    # gives the number of items in the table
+    count = cursor.fetchone()[0]
+    
+    with connection:
+        # deletes the task which is at the given particular position
+        cursor.execute('DELETE from task_tracker WHERE position=:position', {"position:position"})
+        # for shifting all the remaining (tasks after the given position) items one position down 
+        for pos in range(position + 1, count):
+            # calls the function so that the position for every task gets updated
+            change_position(pos, pos-1, False)
+
+# for changing the position when deletion of a record happens
+def change_position(old_position: int, new_position: int, commit=True):
+    # updation of the position happens with the sqlite3 script
+    # basicaly replacing the old position with the new position
+    cursor.execute('UPDATE task_tracker SET position=:position_new WHERE position=:position_old',
+                   {'position_old':old_position}, {'position_new': new_position})
+    # this part is like a placeholder since we do not want to commit
+    if commit == True:
+        connection.commit()
     
 # calling the create table function
 create_table()
