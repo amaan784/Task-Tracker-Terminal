@@ -3,7 +3,7 @@
 # datetime module 
 import datetime
 
-class task_tracker:
+class TaskTracker:
     def __init__(self, task, category, date_added=None, date_completed=None, status=None, position=None):
         """
         Constructor for the todo / task tracker app / table

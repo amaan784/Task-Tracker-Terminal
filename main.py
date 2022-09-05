@@ -1,5 +1,6 @@
 # for the terminal output
 # we need the console and the table
+from turtle import pos
 from rich.console import Console
 from rich.table import Table
 
@@ -8,6 +9,12 @@ import typer
 
 # for creating the database so that we can store the tasks and the other info
 import sqlite3
+
+# importing the database definitions we made
+from model import TaskTracker
+
+# importing all the database function which were created
+from database import insert_task, delete_task, get_all_tasks, update_task, complete_task
 
 # creating a console object
 console = Console()
@@ -29,6 +36,12 @@ app = typer.Typer()
 def add(task: str, category: str):
     # prints in the command line
     typer.echo(f"adding the {task} task in the {category} category")
+    
+    # creating a task tracker object (function from model.py) and 
+    # insert the input in the appropriate attributes in the database (function from databse.py)
+    todo = TaskTracker(task, category)
+    insert_task(todo)
+    
     # calls the display function to print the table
     display()
     
@@ -37,6 +50,11 @@ def add(task: str, category: str):
 def delete(position: int):
     # prints in the command line
     typer.echo(f"deleting {position}")
+    
+    # deletes the task at the given position (function from database.py)
+    # we do position - 1 instead of position because the indices in the UI start at 1 but in the database we begin at 0
+    delete_task(position - 1)
+    
     # calls the display function to print the table
     display()
     
@@ -45,6 +63,11 @@ def delete(position: int):
 def update(position: int, task: str=None, category: str=None):
     # prints in the command line
     typer.echo(f"updating {position}")
+    
+    # updates the task at the given position (function from database.py)
+    # we do position - 1 instead of position because the indices in the UI start at 1 but in the database we begin at 0
+    update_task(position-1, task, category)
+    
     # calls the display function to print the table
     display()
     
@@ -53,6 +76,8 @@ def update(position: int, task: str=None, category: str=None):
 def complete(position: int):
     # prints in the command line
     typer.echo(f"complete {position}")
+    
+    # marks the task as complete at the given positon
     # calls the display function to print the table
     display()
     
