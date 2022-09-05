@@ -1,10 +1,12 @@
 # for the terminal output
+# for rich text and beautiful formatting in the terminal
 # we need the console and the table
 from turtle import pos
 from rich.console import Console
 from rich.table import Table
 
-# for creating the command line interface
+# for creating the command line interface   
+# for building CLI applications
 import typer
 
 # for creating the database so that we can store the tasks and the other info
@@ -124,6 +126,7 @@ def get_category_color(category):
     """
         Function to find the apprpriate color for a category
         Returns a color based on its presence in the dictionary
+        If a color for a category is not present then its white by default
         
         Args:
             category (str): _a category for the taks
@@ -131,7 +134,7 @@ def get_category_color(category):
         Returns:
             str: a color for the category
     """
-    COLORS = {"COLLEGE": "red", "OUTSIDE COLLEGE": "blue", "TIMEPASS":"green", "HOME":"cyan"}
+    COLORS = {"COLLEGE": "red", "OUTSIDE COLLEGE": "bright_yellow", "HOME":"green", "OTHER":"cyan"}
     if category in COLORS:
         return COLORS[category]
     return 'white'

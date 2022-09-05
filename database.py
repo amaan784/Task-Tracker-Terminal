@@ -64,7 +64,7 @@ def delete_task(position):
     
     with connection:
         # deletes the task which is at the given particular position
-        cursor.execute('DELETE from task_tracker WHERE position = :position', {"position:position"})
+        cursor.execute('DELETE from task_tracker WHERE position = :position', {"position":position})
         # for shifting all the remaining (tasks after the given position) items one position down 
         for pos in range(position + 1, count):
             # calls the function so that the position for every task gets updated
@@ -104,7 +104,7 @@ def complete_task(position: int):
     # establishing a db connection and marking the task as complete
     # we set the status as 2 which means completed and we also add the current time as the time of completion
     with connection:
-        cursor.execute('UPDATE task_tracker SET STATUS = 2, date_completed = :date_completed WHERE positionn = :position',
+        cursor.execute('UPDATE task_tracker SET STATUS = 2, date_completed = :date_completed WHERE position = :position',
                        {'position': position, 'date_completed': datetime.datetime.now().isoformat()})      
              
 
