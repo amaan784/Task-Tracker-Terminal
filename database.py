@@ -23,7 +23,7 @@ def create_table():
         category text,
         status integer,
         position integer,
-        data_added text,
+        date_added text,
         date_completed text
         ) """)
 
@@ -38,10 +38,10 @@ def insert_task(task: TaskTracker):
     # insert the task in the appropriate position
     # defining the parameters for the queries beforehand so we can prevent SQL Injection attacks
     with connection:
-        cursor.execute('INSERT INTO task_tracker VALUES (:task, :category, :status, :position, :data_added, :data_completed)',
+        cursor.execute('INSERT INTO task_tracker VALUES (:task, :category, :status, :position, :date_added, :date_completed)',
                        {'task':task.task, 'category':task.category,
                         'status':task.status, 'position':task.position, 
-                        'data_added':task.date_added, 'date_completed':task.date_completed})
+                        'date_added':task.date_added, 'date_completed':task.date_completed})
 
 # for getting all tasks
 def get_all_tasks() -> List[TaskTracker]:
@@ -107,5 +107,7 @@ def complete_task(position: int):
         cursor.execute('UPDATE task_tracker SET STATUS = 2, date_completed = :date_completed WHERE positionn = :position',
                        {'position': position, 'date_completed': datetime.datetime.now().isoformat()})      
              
+
+
 # calling the create table function
 create_table()
