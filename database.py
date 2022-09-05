@@ -28,7 +28,7 @@ def create_table():
         )
         """)
 
-# for inserting tasks
+# for inserting a task
 def insert_task(task: task_tracker):
     # executing sqlite script to count the number of records in the table
     cursor.execute('select count(*) FROM task_tracker')
@@ -37,12 +37,24 @@ def insert_task(task: task_tracker):
     # the position of the task to be inserted is the count of the elements in the table or 0
     task.position = count if count else 0
     # insert the task in the appropriate position
+    # defining the parameter from befor can prevent SQL Injection attacks
     with connection:
         cursor.execute('INSERT INTO task_tracker VALUES (:task, :category, :status, :position, :data_added, :data_completed)',
                        {'task':task.task, 'category':task.category,
                         'status':task.status, 'position':task.position , 
                         'data_added':task.date_added, 'date_ccompleted':task.date_completed})
-    
 
+# for getting all tasks
+def get_all_tasks() -> List[task_tracker]:
+    # get all records from the database table
+    cursor.execute('select * from task_tracker')
+    results = cursor.fetchall()
+    tasks = []
+    # converting the records one by one to the task_tracker object
+    for result in results:
+        tasks.append(task_tracker(*result))
+    # return the records
+    return tasks
+    
 # calling the create table function
 create_table()
