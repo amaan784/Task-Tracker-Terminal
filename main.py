@@ -77,14 +77,19 @@ def complete(position: int):
     # prints in the command line
     typer.echo(f"complete {position}")
     
-    # marks the task as complete at the given positon
+    # marks the task as complete at the given positon (function from database.py)
+    # we do position - 1 instead of position because the indices in the UI start at 1 but in the database we begin at 0
+    complete_task(position-1)
+    
     # calls the display function to print the table
     display()
     
 # function for showing the tasks
 @app.command(short_help='displays the tasks')
 def display():
-    tasks = [("Task1", "category1"), ("Task2", "category2")]
+    # we get all the tasks from the database (function from database.py)
+    # this will contain a list of TaskTracker objects and each object will contain the appropriate attributes from model.py
+    tasks = get_all_tasks()
     
     # printing a name for the table with the color magenta and making the text bold
     # an opening and closing tag [] [/] is needed for the fonts etc
@@ -100,17 +105,16 @@ def display():
     # looping through the tasks with initial index as 1
     for index, task in enumerate(tasks, start=1):
         # getting the color code of a category 
-        # task[1] contains the category which the task (task[0]) belongs to 
-        c = get_category_color(task[1])
+        c = get_category_color(task.category)
         # checks if the task is done of not and adds the appropriate emoji
-        if True == 2:
+        if task.status == 2:
             task_flag = '✔'
         else:
             task_flag = '❌'
         # adding a row to the table
         # the row contains the index, the name of the task,
         # the category of the task with the appropriate color coding for the category and the emoji dependent on whether a task is completed or not
-        table.add_row(str(index), task[0], f'[{c}]{task[1]}[/{c}]', task_flag)
+        table.add_row(str(index), task.task, f'[{c}]{task.category}[/{c}]', task_flag)
         
     # for printing the table
     console.print(table)
@@ -127,7 +131,7 @@ def get_category_color(category):
         Returns:
             str: a color for the category
     """
-    COLORS = {"LEARN COLLEGE": "red", "LEARN OUTSIDE COLLEGE": "blue", "TIMEPASS":"green", "HOME":"cyan"}
+    COLORS = {"COLLEGE": "red", "OUTSIDE COLLEGE": "blue", "TIMEPASS":"green", "HOME":"cyan"}
     if category in COLORS:
         return COLORS[category]
     return 'white'

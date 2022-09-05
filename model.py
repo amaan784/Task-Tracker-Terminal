@@ -4,7 +4,7 @@
 import datetime
 
 class TaskTracker:
-    def __init__(self, task, category, date_added=None, date_completed=None, status=None, position=None):
+    def __init__(self, task, category, status=None, position=None, date_added=None, date_completed=None):
         """
         Constructor for the todo / task tracker app / table
 

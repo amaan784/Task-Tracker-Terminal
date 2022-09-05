@@ -40,7 +40,7 @@ def insert_task(task: TaskTracker):
     with connection:
         cursor.execute('INSERT INTO task_tracker VALUES (:task, :category, :status, :position, :data_added, :data_completed)',
                        {'task':task.task, 'category':task.category,
-                        'status':task.status, 'position':task.position , 
+                        'status':task.status, 'position':task.position, 
                         'data_added':task.date_added, 'date_completed':task.date_completed})
 
 # for getting all tasks

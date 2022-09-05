@@ -9,7 +9,16 @@ datetime
 
 ## Instructions-
 
+`git clone`
+
+`cd task_tracker`
+
+### Displaying the table-
+`python main.py display`
  
-### Sources-
+### Adding a task-
+`python main.py add "task" "category"`
+
+## Sources-
 
 - https://www.youtube.com/watch?v=ynd67UwG_cI
